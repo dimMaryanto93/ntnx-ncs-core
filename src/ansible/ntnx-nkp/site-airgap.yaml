@@ -139,12 +139,21 @@
             state: link
     - name: Publish file bundle into private registry
       block:
-      - shell: "nkp push bundle --bundle ./container-images/konvoy-image-bundle*.tar --to-registry='https://{{ airgap_domain }}{{ airgap_port | default('') }}' --to-registry-username='{{ registry.username }}' --to-registry-password='{{ registry.password }}' --to-registry-insecure-skip-tls-verify"
+      - shell: "ls -d ./container-images/konvoy-image-bundle*.tar | tail -n 1"
+        register: konvoy_image_bundle_loc
+      - shell: "nkp push bundle --bundle {{ konvoy_image_bundle_loc.stdout }} --to-registry='https://{{ airgap_domain }}{{ airgap_port | default('') }}' --to-registry-username='{{ registry.username }}' --to-registry-password='{{ registry.password }}' --to-registry-insecure-skip-tls-verify"
+        when: konvoy_image_bundle_loc is defined and konvoy_image_bundle_loc != ""
         args:
           chdir: "{{ nkp_airgap_dir_loc.stdout }}"
-      - shell: "nkp push bundle --bundle ./container-images/kommander-image-bundle*.tar --to-registry='https://{{ airgap_domain }}{{ airgap_port | default('') }}' --to-registry-username='{{ registry.username }}' --to-registry-password='{{ registry.password }}' --to-registry-insecure-skip-tls-verify"
+      - shell: "ls -d ./container-images/kommander-image-bundle*.tar | tail -n 1"
+        register: kommander_image_bundle_loc
+      - shell: "nkp push bundle --bundle {{ kommander_image_bundle_loc.stdout }} --to-registry='https://{{ airgap_domain }}{{ airgap_port | default('') }}' --to-registry-username='{{ registry.username }}' --to-registry-password='{{ registry.password }}' --to-registry-insecure-skip-tls-verify"
+        when: kommander_image_bundle_loc is defined and kommander_image_bundle_loc != ""
         args:
           chdir: "{{ nkp_airgap_dir_loc.stdout }}"
-      - shell: "nkp push bundle --bundle ./container-images/nkp-catalog-applications-image-bundle*.tar --to-registry='https://{{ airgap_domain }}{{ airgap_port | default('') }}' --to-registry-username='{{ registry.username }}' --to-registry-password='{{ registry.password }}' --to-registry-insecure-skip-tls-verify"
+      - shell: "ls -d ./container-images/nkp-catalog-applications-image-bundle*.tar | tail -n 1"
+        register: nkp_apps_image_bundle_loc
+      - shell: "nkp push bundle --bundle {{ nkp_apps_image_bundle_loc.stdout }} --to-registry='https://{{ airgap_domain }}{{ airgap_port | default('') }}' --to-registry-username='{{ registry.username }}' --to-registry-password='{{ registry.password }}' --to-registry-insecure-skip-tls-verify"
+        when: nkp_apps_image_bundle_loc is defined and nkp_apps_image_bundle_loc != ""
         args:
           chdir: "{{ nkp_airgap_dir_loc.stdout }}"
