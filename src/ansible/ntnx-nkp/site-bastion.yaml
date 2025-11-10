@@ -4,7 +4,7 @@
   vars:
     helm_version: 'v3.16.3'
     kubectl_download_filetype: 'archive'
-    kubectl_version: '1.29.9'
+    kubectl_version: '1.33.2'
     kubectl_tmp_directory: '/tmp'
     path_downloaded_airgap: /tmp
     nkp_cli_dir_path: /opt/nkp-cli

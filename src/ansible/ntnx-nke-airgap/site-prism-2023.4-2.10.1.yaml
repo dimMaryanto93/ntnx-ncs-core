@@ -3,6 +3,7 @@
   become: true
   vars:
     direct_download: false
+    enable_airgap_object: false
     default_nke_airgap_version: 2.10.1
     default_nke_airgap_site_folder: /release/nke/2.10.1
     default_nke_airgap_folder: /Volumes/dell-r330/Packages/Nutanix/nkp/2.10.1
