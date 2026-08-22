@@ -10,7 +10,7 @@ Untuk upgrade NKP Kommander
 | 2.16.1            | pc.           |               | 2.16.1          |
 
 
-## Upgrade certificate registry
+## Update expired certificate for registry
 
 - Step 1: Extract a CSR from the expired certificateRun this command to create a request file (cert.csr) using your old certificate and private key (`cert.key`):
 
@@ -29,4 +29,8 @@ sudo mv domain_new.crt domain.crt
 - Step 3: Check new expiration certificate
 ```bash
 openssl x509 -enddate -noout -in domain.crt
+```
+
+- Step 4: Recreate/recreate registry to update
+```bash
 ```
