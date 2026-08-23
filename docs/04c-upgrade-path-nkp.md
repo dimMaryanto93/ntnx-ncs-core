@@ -33,4 +33,9 @@ openssl x509 -enddate -noout -in domain.crt
 
 - Step 4: Recreate/recreate registry to update
 ```bash
+# untuk airgap (openregistry) running on docker, perlu destroy dan buat ulang
+
+
+# untuk Nexus OSS, perlu restart service nginx saja
+systemctl restart nginx
 ```
