@@ -78,5 +78,36 @@ nkp-v2.16.1]$ cli/nkp upgrade kommander --kommander-applications-repository ./ap
 nkp get workspaces
 
 ## put one workspace into this `workspace_name`
-nkp upgrade workspace ${WORKSPACE_NAME}
+cli/nkp upgrade workspace ${WORKSPACE_NAME}
+```
+
+## Upgrade Managed NKP nodes
+
+- Step 1: Get all cluster in kommander 
+
+```bash
+kubectl get cluster -A
+```
+
+Step 2: Upgrade kommander cluster image vm
+
+```bash
+export MANAGEMENT_CLUSTER_NAME='nkp-kommander-hpoc1030'
+export VM_IMAGE_NAME='nkp-rocky-9.6-release-cis-1.33.5-20251108010758.qcow2'
+
+cli/nkp upgrade cluster nutanix \
+--cluster-name ${MANAGEMENT_CLUSTER_NAME} \
+--vm-image ${VM_IMAGE_NAME}
+```
+
+Step 3: Upgrade managed cluster image vm
+
+```bash
+export WORKLOAD_CLUSTER_NAME='nkp-trial-devsecops'
+export VM_IMAGE_NAME='nkp-rocky-9.6-release-cis-1.33.5-20251108010758.qcow2'
+export WORKLOAD_CLUSTER_NAMESPACE='nkp-trial-devsecops-b5gsx'
+
+cli/nkp upgrade cluster nutanix \
+--cluster-name ${WORKLOAD_CLUSTER_NAME} \
+--vm-image ${VM_IMAGE_NAME} -n ${WORKLOAD_CLUSTER_NAMESPACE}
 ```
