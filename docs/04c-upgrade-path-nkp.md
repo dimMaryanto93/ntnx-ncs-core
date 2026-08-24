@@ -39,3 +39,44 @@ openssl x509 -enddate -noout -in domain.crt
 # untuk Nexus OSS, perlu restart service nginx saja
 systemctl restart nginx
 ```
+
+## Download Upgrade NKP Airgap Bundle
+
+- Step 1: Download NKP Airgap Bundle from Nutanix Support Portal 
+- Step 2: Extract a tar file 
+
+```bash
+tar -zxf nkp-bundle_v2.16.1_linux_amd64.tar.gz && \
+cd nkp-v2.16.1
+
+## Upload binary container image into container registry
+export MIRROR_REGISTRY_URL='https://airgap.nutanix.local:5000'
+export MIRROR_REGISTRY_USERNAME='admin'
+export MIRROR_REGISTRY_PASSWORD='nutanix/4u'
+export MIRROR_REGISTRY_CACERT='/etc/docker/certs.d/airgap.nutanix.local:5000/registry.crt'
+
+cli/nkp push bundle --bundle ./container-images/konvoy-image-bundle*.tar --to-registry=${MIRROR_REGISTRY_URL} --to-registry-username=${MIRROR_REGISTRY_USERNAME} --to-registry-password=${MIRROR_REGISTRY_PASSWORD} --to-registry-ca-cert-file=${MIRROR_REGISTRY_CACERT} && \ 
+cli/nkp push bundle --bundle ./container-images/kommander-image-bundle*.tar --to-registry=${MIRROR_REGISTRY_URL} --to-registry-username=${MIRROR_REGISTRY_USERNAME} --to-registry-password=${MIRROR_REGISTRY_PASSWORD} --to-registry-ca-cert-file=${MIRROR_REGISTRY_CACERT}
+```
+
+- Step 3: Load image into docker image
+
+```bash
+docker load -i konvoy-bootstrap-image* && \
+docker load -i nkp-image-builder-image*
+```
+
+- Step 4: Upgrade kommander
+
+```bash
+nkp-v2.16.1]$ cli/nkp upgrade kommander --kommander-applications-repository ./application-repositories/kommander-applications-v2.16.1.tar.gz --disable-appdeployments ai-navigator-app
+```
+
+- Step 5: Upgrade all workspaces in kommander cluster
+
+```bash
+nkp get workspaces
+
+## put one workspace into this `workspace_name`
+nkp upgrade workspace ${WORKSPACE_NAME}
+```
