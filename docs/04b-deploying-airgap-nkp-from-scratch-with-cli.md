@@ -375,14 +375,14 @@ After installing Operating System, you should config and install basic package h
 11. Publish container to private registry used by NKP
 
     ```bash
-    export REGISTRY_URL='https://airgap.nutanix.local:5000'
-    export REGISTRY_USERNAME='admin'
-    export REGISTRY_PASSWORD='nutanix/4u'
-    export REGISTRY_CACERT='/etc/docker/certs.d/airgap.nutanix.local:5000/registry.crt'
+    export MIRROR_REGISTRY_URL='https://airgap.nutanix.local:5000'
+    export MIRROR_REGISTRY_USERNAME='admin'
+    export MIRROR_REGISTRY_PASSWORD='nutanix/4u'
+    export MIRROR_REGISTRY_CACERT='/etc/docker/certs.d/airgap.nutanix.local:5000/registry.crt'
 
-    nkp push bundle --bundle ./container-images/konvoy-image-bundle*.tar --to-registry=${REGISTRY_URL} --to-registry-username=${REGISTRY_USERNAME} --to-registry-password=${REGISTRY_PASSWORD} --to-registry-ca-cert-file=${REGISTRY_CACERT} && \    
-    nkp push bundle --bundle ./container-images/kommander-image-bundle*.tar --to-registry=${REGISTRY_URL} --to-registry-username=${REGISTRY_USERNAME} --to-registry-password=${REGISTRY_PASSWORD} --to-registry-ca-cert-file=${REGISTRY_CACERT} && \
-    nkp push bundle --bundle ./container-images/nkp-catalog-applications-image-bundle*.tar --to-registry=${REGISTRY_URL} --to-registry-username=${REGISTRY_USERNAME} --to-registry-password=${REGISTRY_PASSWORD} --to-registry-ca-cert-file=${REGISTRY_CACERT}
+    nkp push bundle --bundle ./container-images/konvoy-image-bundle*.tar --to-registry=${MIRROR_REGISTRY_URL} --to-registry-username=${MIRROR_REGISTRY_USERNAME} --to-registry-password=${MIRROR_REGISTRY_PASSWORD} --to-registry-ca-cert-file=${MIRROR_REGISTRY_CACERT} && \    
+    nkp push bundle --bundle ./container-images/kommander-image-bundle*.tar --to-registry=${MIRROR_REGISTRY_URL} --to-registry-username=${MIRROR_REGISTRY_USERNAME} --to-registry-password=${MIRROR_REGISTRY_PASSWORD} --to-registry-ca-cert-file=${MIRROR_REGISTRY_CACERT} && \
+    nkp push bundle --bundle ./container-images/nkp-catalog-applications-image-bundle*.tar --to-registry=${MIRROR_REGISTRY_URL} --to-registry-username=${MIRROR_REGISTRY_USERNAME} --to-registry-password=${MIRROR_REGISTRY_PASSWORD} --to-registry-ca-cert-file=${MIRROR_REGISTRY_CACERT}
     ```
 
     After finished publish the images bundle, you can see at private registry look like this:
