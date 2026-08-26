@@ -40,6 +40,19 @@ openssl x509 -enddate -noout -in domain.crt
 systemctl restart nginx
 ```
 
+- Step 3: Update the Registry Mirror CA in the Kubeadm Config
+
+```bash
+## get list of kubernetes cluster are availables
+kubectl get kubeadmconfigtemplate
+
+## Get secret of name your ca certificates of registry
+kubectl describe kubeadmconfigtemplate/<template-name> -n <namespace>
+
+## Edit ca.crt key then put in your certificate files value into it,makesure you should encode base64 value into secret value
+kubectl edit secret <secret-name> -n <namespace>
+```
+
 ## Download Upgrade NKP Airgap Bundle
 
 - Step 1: Download NKP Airgap Bundle from Nutanix Support Portal 
