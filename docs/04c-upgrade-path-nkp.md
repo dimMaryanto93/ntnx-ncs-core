@@ -9,7 +9,6 @@ Untuk upgrade NKP Kommander
 | 2.15.3            | pc.2024.3     | 7.x           | 2.16.1          |
 | 2.16.1            | pc.           |               | 2.16.1          |
 
-
 ## Download Upgrade NKP Airgap Bundle
 
 - Step 1: Download NKP Airgap Bundle from Nutanix Support Portal 
